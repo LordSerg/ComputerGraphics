@@ -1,0 +1,15 @@
+﻿  Lab2.cpp
+D:\_Лабораторки\Комп. графика\Lab2\Lab2\Renderer.h(10,37): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\_Лабораторки\Комп. графика\Lab2\Lab2\Renderer.h(16,39): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\_Лабораторки\Комп. графика\Lab2\Lab2\Renderer.h(17,39): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\_Лабораторки\Комп. графика\Lab2\Lab2\Renderer.h(35,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\_Лабораторки\Комп. графика\Lab2\Lab2\Renderer.h(36,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\_Лабораторки\Комп. графика\Lab2\Lab2\Renderer.h(37,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\_Лабораторки\Комп. графика\Lab2\Lab2\Renderer.h(92,75): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\_Лабораторки\Комп. графика\Lab2\Lab2\Renderer.h(92,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\_Лабораторки\Комп. графика\Lab2\Lab2\Renderer.h(113,77): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\_Лабораторки\Комп. графика\Lab2\Lab2\Renderer.h(113,44): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\_Лабораторки\Комп. графика\Lab2\Lab2\Renderer.h(149,1): warning C4305: '+=': truncation from 'double' to 'float'
+D:\_Лабораторки\Комп. графика\Lab2\Lab2\Lab2.cpp(19,25): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\_Лабораторки\Комп. графика\Lab2\Lab2\Lab2.cpp(26,25): warning C4305: 'argument': truncation from 'double' to 'float'
+  Lab2.vcxproj -> D:\_Лабораторки\Комп. графика\Lab2\Debug\Lab2.exe

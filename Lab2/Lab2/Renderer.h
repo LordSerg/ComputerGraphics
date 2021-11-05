@@ -1,8 +1,84 @@
 #pragma once
 //#ifndef GLRENDERSYSTEM_H
 //#define GLRENDERSYSTEM_H
+#include "GLEW/glew.h"
 #include "GLFW/glfw3.h"
+#include"GLFW/glfw3native.h"
 #include <iostream>
+namespace Cube 
+{
+    float vertices[] = 
+    {
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+        -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+
+        -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+        -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+
+        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+        0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+
+        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
+        0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+        0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+        -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f
+    };
+    float vert2[] =
+    {
+        0.0f, 0.0f, 0.2f, 0.0f, 0.0f,
+        0.5f, -0.3f, -0.5f, 1.0f, 0.0f,
+        -0.5f, -0.3f, -0.5f, 1.0f, 1.0f
+    };
+    unsigned int VBO;
+    unsigned int VAO;
+
+    //Shader ourShader; //? 
+
+}
+namespace Triangle
+{
+    float vertices[] =
+    {
+        0.0f, 0.0f, 0.2f, 0.0f, 0.0f,
+        0.5f, -0.3f, -0.5f, 1.0f, 0.0f,
+        -0.5f, -0.3f, -0.5f, 1.0f, 1.0f
+    };
+    unsigned int VBO;
+    unsigned int VAO;
+
+    //Shader ourShader; //? 
+
+}
+
+
 namespace oknelaksoms 
 {
     namespace GraphCore 
@@ -32,8 +108,8 @@ namespace oknelaksoms
                 //if (abs(y) > 1)	dir += PI;
                 if (dir < -PI)dir += 2 * PI;
                 if (dir > PI)dir -= 2 * PI;
-                x += 0.001 * cos(dir);
-                y += 0.001 * sin(dir);
+                x += 0.01 * cos(dir);
+                y += 0.01 * sin(dir);
                 dir += (float)(rand() % 200-100)*0.0001;
             }
         };
@@ -47,24 +123,84 @@ namespace oknelaksoms
 
             virtual void render(GLFWwindow* window,int mode) {}
 
-            virtual void renderTriangleArray(GLfloat vertices[], GLfloat colors[]) {}
+            virtual void renderTriangleArray(GLFWwindow* window) {}
 
             virtual void renderVBO() {}
         };
 
         class GLRender : public GLRenderSystem
         {
-
+            double a = 0;
             void init()
             {
+                if (!glfwInit())
+                {
+                    fprintf(stderr, "Ошибка при инициализации GLFW\n");
+                    return;
+                }
+                glfwWindowHint(GLFW_SAMPLES, 4); // 4x Сглаживание
+                glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // Мы хотим использовать OpenGL 3.3
+                glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
             }
 
-            void render(GLFWwindow* window) {
-
+            void render(GLFWwindow* window,int m) 
+            {
+                glClearColor(1, 0, 0, 1);
+                glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+                glColor3d(0, 0, 1);
+                glEnable(GL_DEPTH_TEST);
+                glMatrixMode(GL_MODELVIEW);
+                glPushMatrix();
+                glGenBuffers(1, &Cube::VBO);
+                glBindBuffer(GL_ARRAY_BUFFER, Cube::VBO);
+                glBufferData(GL_ARRAY_BUFFER, sizeof(Cube::vertices), Cube::vertices, GL_STATIC_DRAW);
+                glVertexPointer(3, GL_FLOAT, 0, NULL);
+                glBindBuffer(GL_ARRAY_BUFFER, Cube::VBO);
+                
+                //VAO
+                glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+                glEnableVertexAttribArray(0);
+                //Данный массив содержит вершины(не нормалей, цвета, текстуры и т.д.)
+                glEnableClientState(GL_VERTEX_ARRAY);
+                
+                glRotated(a, 1, 2.1, -0.3);
+                glDrawArrays(GL_TRIANGLES, 0, (sizeof(Cube::vertices) / sizeof(Cube::vertices[0])) / 5);
+                glDisableClientState(GL_VERTEX_ARRAY);
+                glPopMatrix();
+                a += 0.5;
+                //if (a > 10 * PI)
+                //    a -= 10 * PI;
             }
 
-            void renderTriangleArray(GLfloat vertices[], GLfloat colors[]) {
+            void renderTriangleArray(GLFWwindow* window)
+            {
+                glClearColor(sin(colorRGB * PI / 180), abs(cos(colorRGB * PI / 180)), abs(sin(colorRGB * PI / 180) + cos(colorRGB * PI / 180)), 1.0f);
+                colorRGB <= 180 ? colorRGB += 0.5 : colorRGB = 0;
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                glColor3d(0, 0, 1);
+                glEnable(GL_DEPTH_TEST);
+                glMatrixMode(GL_MODELVIEW);
+                glPushMatrix();
+
+                glGenBuffers(1, &Triangle::VBO);
+                glBindBuffer(GL_ARRAY_BUFFER, Triangle::VBO);
+                glBufferData(GL_ARRAY_BUFFER, sizeof(Triangle::vertices), Triangle::vertices, GL_STATIC_DRAW);
+                glVertexPointer(3, GL_FLOAT, 0, NULL);
+                glBindBuffer(GL_ARRAY_BUFFER, Triangle::VBO);
+
+                //VAO
+                glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+                glEnableVertexAttribArray(0);
+                //Данный массив содержит вершины(не нормалей, цвета, текстуры и т.д.)
+                glEnableClientState(GL_VERTEX_ARRAY);
+
+                glRotated(a, 1, 2.1, -0.3);
+                glDrawArrays(GL_TRIANGLES, 0, (sizeof(Triangle::vertices) / sizeof(Triangle::vertices[0])) / 5);
+                glDisableClientState(GL_VERTEX_ARRAY);
+                glPopMatrix();
+                a += 0.5;
+               
             }
         };
 
@@ -85,7 +221,7 @@ namespace oknelaksoms
 
                 //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
                 //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // Мы не хотим старый OpenGL
-                n = 5000;
+                n = 500;
                 p1 = new point[n];
                 for (int i = 0; i < n; i++)
                 {
@@ -140,31 +276,23 @@ namespace oknelaksoms
                 */
             }
 
-            void renderTriangleArray(GLfloat vertices[], GLfloat colors[], int n) 
+            void renderTriangleArray(GLFWwindow* window)
             {
                 glClearColor(sin(colorRGB * PI / 180), abs(cos(colorRGB * PI / 180)), abs(sin(colorRGB * PI / 180) + cos(colorRGB * PI / 180)), 1.0f);
                 glClear(GL_COLOR_BUFFER_BIT);
-
-                {
-                    colorRGB <= 180 ? colorRGB += 0.1 : colorRGB = 0;
-                }
-
+                colorRGB <= 180 ? colorRGB += 0.5 : colorRGB = 0;
+                
                 glLoadIdentity();
                 glRotatef((float)glfwGetTime() * 50.f, 0.f, 1.f, 1.f);
                 glBegin(GL_TRIANGLES);
-                if (n % 3 == 0) 
-                {
-                    for (int i = 0; i <= n; i += 3) {
-                        glColor3f(colors[i], colors[i + 1], colors[i + 2]);
-                        glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
-                    }
-                }
-                else 
-                {
-                    fprintf(stderr, "Triangle error");
-                    return;
-
-                }
+                
+                glColor3f(1, 0, 1);
+                glVertex3f(0.0f,0.0f , 0.2f);
+                glColor3f(1, 1, 0);
+                glVertex3f(0.5f,-0.3f , -0.5f);
+                glColor3f(1, 0, 0);
+                glVertex3f(-0.5f,-0.3f , -0.5f);
+                
                 glEnd();
             }
 
